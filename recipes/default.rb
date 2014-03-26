@@ -47,6 +47,18 @@ template "/etc/monit/conf.d/delayed_job.conf" do
   only_if "test -e /etc/init.d/delayed_job"
 end
 
+template "/etc/monit/conf.d/sidekiq.conf" do
+  source "sidekiq.conf.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  variables({
+    :hostname => hostname
+  })
+
+  only_if "test -e /etc/init.d/sidekiq"
+end
+
 script "Start monit daemon" do
   interpreter "bash"
   user "root"
