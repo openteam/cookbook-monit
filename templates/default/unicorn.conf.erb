@@ -1,0 +1,10 @@
+check process unicorn with pidfile /srv/<%= @node[:fqdn] %>/shared/tmp/pids/unicorn.pid
+
+start program = "/etc/init.d/unicorn start"
+stop program = "/etc/init.d/unicorn stop"
+
+if cpu > 60% for 2 cycles then alert
+if cpu > 80% for 5 cycles then restart
+if totalmem > 300.0 MB for 5 cycles then restart
+if 5 restarts within 5 cycles then timeout
+
