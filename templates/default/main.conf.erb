@@ -5,7 +5,7 @@ set eventqueue
 basedir /var/log/monit
 slots 100
 
-set mailserver smtp.gmail.com port 587 username "no-reply@host.ru" password "SECRET" using tlsv1
+set mailserver smtp.gmail.com port 587 username "<%= Chef::EncryptedDataBagItem.load("credentials", "monit")['login'] %>" password "<%= Chef::EncryptedDataBagItem.load("credentials", "monit")['password'] %>" using tlsv1
 
 set mail-format { from: no-reply@openteam.ru }
 set alert developers@openteam.ru
