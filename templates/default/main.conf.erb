@@ -7,9 +7,9 @@ slots 100
 
 set mailserver smtp.gmail.com port 587 username "<%= Chef::EncryptedDataBagItem.load("credentials", "monit")['login'] %>" password "<%= Chef::EncryptedDataBagItem.load("credentials", "monit")['password'] %>" using tlsv1
 
-set mail-format { from: no-reply@openteam.ru }
-set alert developers@openteam.ru
-set alert developers@openteam.ru { timeout }
+set mail-format { from: <%= Chef::EncryptedDataBagItem.load("credentials", "monit")['email_from'] %> }
+set alert <%= Chef::EncryptedDataBagItem.load("credentials", "monit")['email_to'] %>
+set alert <%= Chef::EncryptedDataBagItem.load("credentials", "monit")['email_to'] %> { timeout }
 
 check system <%= @node[:fqdn] %>
   if loadavg (1min) > 6 then alert
